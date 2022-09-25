@@ -1,5 +1,5 @@
 .App {
-  text-align: center;
+  /* text-align: center; */
 }
 
 .App-logo {
@@ -35,4 +35,23 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+/* -------custom css------- */
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  background-color: black;
+  color: white;
+}
+
+.container aside {
+  padding: 9%;
+}
+
+.combobox-input {
+  width: 100%;
+  padding: 1em;
 }
