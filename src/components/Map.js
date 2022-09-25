@@ -49,7 +49,6 @@ function Map() {
   const onLoad = useCallback((map) => (mapRef.current = map), []);
 
   const onUnmount = useCallback(function callback(map) {
->>>>>>> 383f8bacfd3cde14ea4236d95a753c55d9406bb1
     setMap(null);
   }, []);
 
