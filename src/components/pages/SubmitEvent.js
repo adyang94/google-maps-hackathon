@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
-import { FormControl, Text, FormLabel, Input, FormHelperText, FormErrorMessage, Button, InputRightElement, InputGroup, Stack, Form } from '@chakra-ui/react';
+import React from 'react';
+import { FormControl, Text, FormLabel, Input, Button, Stack } from '@chakra-ui/react';
 import axios from 'axios';
-import PasswordInput from '../elements/PasswordInput';
-import EmailInput from '../elements/EmailInput';
 
 function SubmitEvent() {
 
@@ -10,10 +8,7 @@ function SubmitEvent() {
     e.preventDefault();
     let url = process.env.REACT_APP_DATABASE_URL + 'Events';
 
-    console.log(process.env.REACT_APP_DATABASE_URL);
-    console.log(e.target.eventName.value);
-
-    let payLoad = { 
+    let payLoad = {
       event_name: e.target.eventName.value,
       address: e.target.eventAddress.value,
       description: e.target.eventDescription.value,
@@ -31,8 +26,9 @@ function SubmitEvent() {
       .then(() => {
         console.log('Submission successfull.');
       })
-      .catch(() => {
-        console.error('Submission error occurred.');
+      .catch((error) => {
+        console.error('Submission error occurred: ', error.response);
+        console.error(error);
       })
 
     /* NEED ERROR HANDLING IF PAYLOAD ERRORS OUT. */
