@@ -9,7 +9,7 @@ import {
 } from "@react-google-maps/api";
 
 // local imports
-import Places from "./Places";
+import Places from "../Places";
 
 const containerStyle = {
   width: "100%",
