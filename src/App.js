@@ -5,7 +5,7 @@ import {
   Route,
 } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react'
-import Map from "./components/Map";
+import Map from "./components/pages/Map";
 import Homepage from './components/pages/Homepage';
 import Instructions from './components/pages/Instruction';
 import Login from './components/pages/Login';
@@ -24,11 +24,11 @@ function App() {
             <Route exact path="/login" element={<Login />} />
             <Route exact path="/signup" element={<Signup />} />
             <Route exact path="/submitevent" element={<SubmitEvent />} />
+            <Route exact path="/map" element={<Map />} />
           </Routes>
 
         </BrowserRouter>
       </ChakraProvider>
-      <Map />
       <form></form>
 
     </div>

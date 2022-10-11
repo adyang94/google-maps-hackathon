@@ -25,6 +25,8 @@ function Instruction () {
         <LargeButton1 text="Login!" path="/login"/>
         <br></br>
         <LargeButton1 text="Add an event!" path="/submitevent"/>
+        <br></br>
+        <LargeButton1 text="Go to map" path="/map"/>
 
       </div>
     </div>
