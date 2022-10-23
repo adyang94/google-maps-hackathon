@@ -1,25 +1,34 @@
-import React from 'react';
+import { React } from "react";
 import { FormControl, Text, FormLabel, Input, Button, Stack } from '@chakra-ui/react';
 import axios from 'axios';
-import Places from '../Places';
 import { getGeocode, getLatLng } from 'use-places-autocomplete';
+import {
+  useJsApiLoader
+} from "@react-google-maps/api";
+import PlacesAutocomplete from "../elements/SearchAutocomplete";
 
 function SubmitEvent() {
+  const { isLoaded } = useJsApiLoader({
+    id: "google-map-script",
+    googleMapsApiKey: process.env.REACT_APP_API_KEY,
+    libraries: ["places"],
+  });
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
     let url = process.env.REACT_APP_DATABASE_URL + 'Events';
 
-    console.log(e.target[1]);
+    console.log(e.target.searchAddress);
 
-    getGeocode({address: e.target[1].value}).then((res) => {
+    getGeocode({address: e.target.searchAddress.value}).then((res) => {
 
       let { lat, lng } = getLatLng(res[0]);
       console.log(lat, lng);
 
       let payLoad = {
         event_name: e.target.eventName.value,
-        address: e.target[1].value,
+        address: e.target.searchAddress.value,
         description: e.target.eventDescription.value,
         date: e.target.eventDate.value,
         lat: lat,
@@ -47,11 +56,10 @@ function SubmitEvent() {
       console.log("ERROR: ", err);
     })
 
-
     /* NEED ERROR HANDLING IF PAYLOAD ERRORS OUT. */
   }
 
-  return (
+  return isLoaded ? (
     <div className='submitevent public'>
       <Stack>
         <div>
@@ -70,9 +78,7 @@ function SubmitEvent() {
             {/* Address */}
             <div>
               <Text mt='1rem' className='css-4ykw5o'>Address (required):</Text>
-              <Places
-                name='eventAddress1' className='eventAddress1'
-              />
+              <PlacesAutocomplete name='eventAddress' className='eventAddress' />
             </div>
 
             {/* Description */}
@@ -101,6 +107,8 @@ function SubmitEvent() {
       </Stack>
 
     </div>
+  ) : (
+    <>Loading...</>
   );
 }
 

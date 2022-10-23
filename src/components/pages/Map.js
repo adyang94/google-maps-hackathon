@@ -63,6 +63,7 @@ function Map() {
           }}
         />
       </aside>
+      
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}

@@ -29,7 +29,6 @@ function App() {
 
         </BrowserRouter>
       </ChakraProvider>
-      <form></form>
 
     </div>
   );

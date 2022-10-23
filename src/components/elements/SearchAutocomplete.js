@@ -1,32 +1,25 @@
-// external packages
-import usePlacesAutocomplete, {
-  getGeocode,
-  getLatLng,
-} from "use-places-autocomplete";
-
+import usePlacesAutocomplete from "use-places-autocomplete";
 import {
   Combobox,
   ComboboxInput,
   ComboboxPopover,
   ComboboxList,
   ComboboxOption,
-  ComboboxOptionText,
 } from "@reach/combobox";
+
 import "@reach/combobox/styles.css";
-import { useStyleConfig } from "@chakra-ui/react";
 
-const Places = ({ setDestination }) => {
-
+const PlacesAutocomplete = () => {
   const {
     ready,
     value,
-    setValue,
     suggestions: { status, data },
-    clearSuggestions,
+    setValue,
   } = usePlacesAutocomplete();
 
+  console.log('READY   ', ready);
+
   const handleInput = (e) => {
-    console.log('1-------', e, status);
     setValue(e.target.value);
   };
 
@@ -35,13 +28,8 @@ const Places = ({ setDestination }) => {
   };
 
   return (
-    <Combobox onSelect={handleSelect} >
-      <ComboboxInput
-        value={value}
-        onChange={(e) => handleInput(e)}
-        className="combobox-input css-137mmt0"
-        placeholder="Search destination"
-      />
+    <Combobox onSelect={handleSelect} aria-labelledby="demo">
+      <ComboboxInput value={value} onChange={handleInput} disabled={!ready} className='css-137mmt0' name="searchAddress" placeholder="Type address"/>
       <ComboboxPopover>
         <ComboboxList>
           {status === "OK" &&
@@ -54,4 +42,4 @@ const Places = ({ setDestination }) => {
   );
 };
 
-export default Places;
+export default PlacesAutocomplete;
