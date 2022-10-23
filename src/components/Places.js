@@ -13,8 +13,10 @@ import {
   ComboboxOptionText,
 } from "@reach/combobox";
 import "@reach/combobox/styles.css";
+import { useStyleConfig } from "@chakra-ui/react";
 
 const Places = ({ setDestination }) => {
+
   const {
     ready,
     value,
@@ -22,12 +24,21 @@ const Places = ({ setDestination }) => {
     suggestions: { status, data },
     clearSuggestions,
   } = usePlacesAutocomplete();
+
+  const handleInput = (e) => {
+    setValue(e.target.value);
+  };
+
+  const handleSelect = (val) => {
+    setValue(val, false);
+  };
+
   return (
-    <Combobox onSelect={() => {}}>
+    <Combobox onSelect={handleSelect} >
       <ComboboxInput
         value={value}
-        onChange={(e) => setValue(e.target.value)}
-        className="combobox-input"
+        onChange={(e) => handleInput(e)}
+        className="combobox-input css-137mmt0"
         placeholder="Search destination"
       />
       <ComboboxPopover>

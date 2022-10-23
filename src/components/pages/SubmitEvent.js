@@ -1,6 +1,8 @@
 import React from 'react';
 import { FormControl, Text, FormLabel, Input, Button, Stack } from '@chakra-ui/react';
 import axios from 'axios';
+import Places from '../Places';
+import { getGeocode, getLatLng } from 'use-places-autocomplete';
 
 function SubmitEvent() {
 
@@ -8,28 +10,43 @@ function SubmitEvent() {
     e.preventDefault();
     let url = process.env.REACT_APP_DATABASE_URL + 'Events';
 
-    let payLoad = {
-      event_name: e.target.eventName.value,
-      address: e.target.eventAddress.value,
-      description: e.target.eventDescription.value,
-      date: e.target.eventDate.value
-    };
+    console.log(e.target[1]);
 
-    let headers = {
-      headers: {
-        apikey: process.env.REACT_APP_DATABASE_API_KEY,
-        Authorization: 'Bearer' + process.env.REACT_APP_DATABASE_API_KEY
+    getGeocode({address: e.target[1].value}).then((res) => {
+
+      let { lat, lng } = getLatLng(res[0]);
+      console.log(lat, lng);
+
+      let payLoad = {
+        event_name: e.target.eventName.value,
+        address: e.target[1].value,
+        description: e.target.eventDescription.value,
+        date: e.target.eventDate.value,
+        lat: lat,
+        lng: lng
+      };
+  
+      let headers = {
+        headers: {
+          apikey: process.env.REACT_APP_DATABASE_API_KEY,
+          Authorization: 'Bearer' + process.env.REACT_APP_DATABASE_API_KEY
+        }
       }
-    }
+  
+      axios.post(url, payLoad, headers)
+        .then(() => {
+          console.log('Submission successfull.');
+        })
+        .catch((error) => {
+          console.error('Submission error occurred: ', error.response);
+          console.error(error);
+        })
 
-    axios.post(url, payLoad, headers)
-      .then(() => {
-        console.log('Submission successfull.');
-      })
-      .catch((error) => {
-        console.error('Submission error occurred: ', error.response);
-        console.error(error);
-      })
+    })
+    .catch((err) => {
+      console.log("ERROR: ", err);
+    })
+
 
     /* NEED ERROR HANDLING IF PAYLOAD ERRORS OUT. */
   }
@@ -46,26 +63,28 @@ function SubmitEvent() {
           <FormControl>
             {/* Event Name */}
             <div>
-              <FormLabel mt='1rem'>Event Name:</FormLabel>
-              <Input name='eventName' className='eventName' />
+              <FormLabel mt='1rem'>Event Name (required):</FormLabel>
+              <Input name='eventName' className='eventName' placeholder='Type name'/>
             </div>
 
             {/* Address */}
             <div>
-              <FormLabel mt='1rem'>Address:</FormLabel>
-              <Input name='eventAddress' className='eventAddress' />
+              <Text mt='1rem' className='css-4ykw5o'>Address (required):</Text>
+              <Places
+                name='eventAddress1' className='eventAddress1'
+              />
             </div>
 
             {/* Description */}
             <div>
               <FormLabel mt='1rem'>Description:</FormLabel>
-              <Input name='eventDescription' className='eventDescription' />
+              <Input name='eventDescription' className='eventDescription' placeholder='Type description'/>
             </div>
 
             {/* Date */}
             <div>
-              <FormLabel mt='1rem'>Date:</FormLabel>
-              <Input name='eventDate' className='eventDate' />
+              <FormLabel mt='1rem'>Date (required):</FormLabel>
+              <Input name='eventDate' className='eventDate' placeholder='Type date'/>
             </div>
 
             <Button
