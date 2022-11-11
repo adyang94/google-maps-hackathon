@@ -75,7 +75,7 @@ function SubmitEvent() {
               <Input name='eventName' className='eventName' placeholder='Type name'/>
             </div>
 
-            {/* Address */}
+            {/* Address  */}
             <div>
               <Text mt='1rem' className='css-4ykw5o'>Address (required):</Text>
               <PlacesAutocomplete name='eventAddress' className='eventAddress' />
